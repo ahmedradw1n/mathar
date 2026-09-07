@@ -25,13 +25,13 @@ export default function App() {
 
   return (
     <div dir="rtl" lang="ar" style={{ minHeight: '100vh', background: '#f8fafc' }}>
-      {/* شريط علوي بسيط — ليس تسويقياً */}
+      {/* شريط علوي — عنوان + درس/تمارين */}
       <nav
         style={{
           position: 'sticky',
           top: 0,
           zIndex: 10,
-          background: 'rgba(255,255,255,0.92)',
+          background: 'rgba(255,255,255,0.95)',
           backdropFilter: 'blur(10px)',
           borderBottom: '1px solid #e2e8f0',
           padding: '10px 16px',
@@ -45,53 +45,41 @@ export default function App() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <span
             style={{
-              width: 36,
-              height: 36,
-              borderRadius: 10,
+              width: 40,
+              height: 40,
+              borderRadius: 12,
               background: '#0f172a',
               color: 'white',
               display: 'grid',
               placeItems: 'center',
               fontWeight: 800,
-              fontSize: 16,
+              fontSize: 18,
             }}
           >
             هـ
           </span>
           <div>
-            <div style={{ fontWeight: 800, color: '#0f172a', fontSize: 15, lineHeight: 1.1 }}>
+            <div style={{ fontWeight: 800, color: '#0f172a', fontSize: 16, lineHeight: 1.1 }}>
               هندسة الفضاء التفاعلية
             </div>
-            <div style={{ fontSize: 11, color: '#64748b' }}>المرحلة 1 — الأساسيات · مكتمل ✓</div>
+            <div style={{ fontSize: 12, color: '#64748b' }}>منصة تعلم الرياضيات ثلاثية الأبعاد</div>
           </div>
         </div>
 
-        <div style={{ display: 'flex', gap: 6, alignItems: 'center', flexWrap: 'wrap' }}>
-          <div style={{ display: 'flex', gap: 2, background: '#f1f5f9', borderRadius: 999, padding: 2, overflowX: 'auto', maxWidth: '100%' }}>
-            <button onClick={() => setStage('basics')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'basics' ? 'white' : 'transparent', boxShadow: stage === 'basics' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>الأساسيات</button>
-            <button onClick={() => setStage('vectors')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'vectors' ? 'white' : 'transparent', boxShadow: stage === 'vectors' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>الأشعة</button>
-            <button onClick={() => setStage('planes')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'planes' ? 'white' : 'transparent', boxShadow: stage === 'planes' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>المستوى</button>
-            <button onClick={() => setStage('lines')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'lines' ? 'white' : 'transparent', boxShadow: stage === 'lines' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>المستقيمات</button>
-            <button onClick={() => setStage('relations')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'relations' ? 'white' : 'transparent', boxShadow: stage === 'relations' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>العلاقات</button>
-            <button onClick={() => setStage('distances')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'distances' ? 'white' : 'transparent', boxShadow: stage === 'distances' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>المسافات</button>
-            <button onClick={() => setStage('spheres')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'spheres' ? 'white' : 'transparent', boxShadow: stage === 'spheres' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>الكرة</button>
-            <button onClick={() => setStage('advanced')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'advanced' ? 'white' : 'transparent', boxShadow: stage === 'advanced' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>متقدمة</button>
-            <button onClick={() => setStage('shapes')} style={{ padding: '4px 4px', borderRadius: 999, border: 'none', background: stage === 'shapes' ? 'white' : 'transparent', boxShadow: stage === 'shapes' ? '0 1px 4px rgba(0,0,0,0.12)' : 'none', fontWeight: 700, fontSize: 6, cursor: 'pointer', color: '#0f172a', whiteSpace: 'nowrap' }}>الأشكال</button>
-          </div>
-          <div style={{ width: 1, height: 18, background: '#e2e8f0', margin: '0 2px' }} />
+        <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
           <button
             onClick={() => setTab('lesson')}
             style={{
-              padding: '8px 14px',
+              padding: '10px 18px',
               borderRadius: 999,
               border: '1px solid',
               borderColor: tab === 'lesson' ? '#0f172a' : '#e2e8f0',
               background: tab === 'lesson' ? '#0f172a' : 'white',
               color: tab === 'lesson' ? 'white' : '#334155',
               fontWeight: 700,
-              fontSize: 13,
+              fontSize: 14,
               cursor: 'pointer',
-              minHeight: 36,
+              minHeight: 40,
             }}
           >
             الدرس
@@ -99,20 +87,77 @@ export default function App() {
           <button
             onClick={() => setTab('exercise')}
             style={{
-              padding: '8px 14px',
+              padding: '10px 18px',
               borderRadius: 999,
               border: '1px solid',
               borderColor: tab === 'exercise' ? '#0f172a' : '#e2e8f0',
               background: tab === 'exercise' ? '#0f172a' : 'white',
               color: tab === 'exercise' ? 'white' : '#334155',
               fontWeight: 700,
-              fontSize: 13,
+              fontSize: 14,
               cursor: 'pointer',
-              minHeight: 36,
+              minHeight: 40,
             }}
           >
             التمارين
           </button>
+        </div>
+      </nav>
+
+      {/* شريط المراحل — كبير وواضح */}
+      <nav
+        style={{
+          position: 'sticky',
+          top: 60,
+          zIndex: 9,
+          background: 'white',
+          borderBottom: '1px solid #e2e8f0',
+          padding: '10px 12px',
+          overflowX: 'auto',
+          WebkitOverflowScrolling: 'touch',
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            gap: 8,
+            minWidth: 'max-content',
+            alignItems: 'center',
+          }}
+        >
+          <span style={{ fontWeight: 800, fontSize: 13, color: '#0f172a', marginLeft: 6, whiteSpace: 'nowrap' }}>المراحل:</span>
+          {[
+            ['basics', 'الأساسيات'],
+            ['vectors', 'الأشعة'],
+            ['planes', 'المستوى'],
+            ['lines', 'المستقيمات'],
+            ['relations', 'العلاقات'],
+            ['distances', 'المسافات'],
+            ['spheres', 'الكرة'],
+            ['advanced', 'متقدمة'],
+            ['shapes', 'الأشكال'],
+          ].map(([key, label]) => (
+            <button
+              key={key}
+              onClick={() => setStage(key as any)}
+              style={{
+                padding: '9px 16px',
+                borderRadius: 999,
+                border: '1px solid',
+                borderColor: stage === key ? '#0f172a' : '#e2e8f0',
+                background: stage === key ? '#0f172a' : '#f8fafc',
+                color: stage === key ? 'white' : '#334155',
+                fontWeight: 700,
+                fontSize: 14,
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                minHeight: 38,
+                flexShrink: 0,
+              }}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </nav>
 
