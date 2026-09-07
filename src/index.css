@@ -1,0 +1,65 @@
+@import 'katex/dist/katex.min.css';
+
+* { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+}
+
+:root {
+  --bg: #f8fafc;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --muted: #64748b;
+  --accent: #7c3aed;
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, -apple-system, Tahoma, Arial, sans-serif;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* RTL: المعادلات تبقى LTR */
+.katex { direction: ltr; unicode-bidi: isolate; }
+
+/* تمرير أفقي للمعادلات إن ضاقت */
+.katex-display { overflow-x: auto; overflow-y: hidden; }
+
+/* تحسين المنزلقات للمس */
+input[type="range"] {
+  height: 28px;
+  touch-action: manipulation;
+}
+
+/* أزرار سهلة اللمس */
+button { touch-action: manipulation; }
+
+/* شبكة الدرس responsive */
+@media (min-width: 900px) {
+  .lesson-grid {
+    grid-template-columns: 1.15fr 0.85fr !important;
+  }
+  .lesson-grid > div:first-child {
+    height: 520px !important;
+    position: sticky;
+    top: 12px;
+  }
+}
+
+@media (max-width: 899px) {
+  .lesson-grid > div:first-child {
+    height: 340px !important;
+  }
+}
