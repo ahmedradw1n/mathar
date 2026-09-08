@@ -6,7 +6,6 @@ import type { Point3 } from './types'
 const A: Point3 = { x: 0, y: 0, z: 0 }
 const B: Point3 = { x: 4, y: 0, z: 0 }
 const C: Point3 = { x: 0, y: 3, z: 0 }
-const D: Point3 = { x: 0, y: 0, z: 2 }
 
 describe('barycenter', () => {
   it('نقطتان متساويتان → منتصف', () => {
