@@ -17,11 +17,16 @@ import AdvancedStage from './lessons/AdvancedStage'
 import AdvancedExercises from './exercises/AdvancedExercises'
 import ShapesStage from './lessons/ShapesStage'
 import ShapesExercises from './exercises/ShapesExercises'
+import BarycenterStage from './lessons/BarycenterStage'
+import BarycenterExercises from './exercises/BarycenterExercises'
+import SectionsStage from './lessons/SectionsStage'
+import SectionsExercises from './exercises/SectionsExercises'
+import IntegrationStage from './lessons/IntegrationStage'
 
 export default function App() {
   const [point, setPoint] = useState<[number, number, number]>([3, 2, 4])
   const [tab, setTab] = useState<'lesson' | 'exercise'>('lesson')
-  const [stage, setStage] = useState<'basics' | 'vectors' | 'planes' | 'lines' | 'relations' | 'distances' | 'spheres' | 'advanced' | 'shapes'>('shapes')
+  const [stage, setStage] = useState<'basics' | 'vectors' | 'planes' | 'lines' | 'relations' | 'distances' | 'spheres' | 'advanced' | 'shapes' | 'barycenter' | 'sections' | 'integration'>('barycenter')
 
   return (
     <div dir="rtl" lang="ar" style={{ minHeight: '100vh', background: '#f8fafc' }}>
@@ -136,6 +141,9 @@ export default function App() {
             ['spheres', 'الكرة'],
             ['advanced', 'متقدمة'],
             ['shapes', 'الأشكال'],
+            ['barycenter', 'مركز مثقل'],
+            ['sections', 'المقاطع'],
+            ['integration', 'تكامل'],
           ].map(([key, label]) => (
             <button
               key={key}
@@ -287,15 +295,15 @@ export default function App() {
             <AdvancedExercises />
           </div>
         )
-      ) : tab === 'lesson' ? (
-        <ShapesStage />
-      ) : (
-        <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px' }}>
-          <h2 style={{ margin: '8px 0 4px', color: '#0f172a' }}>التمارين — الأشكال والتطبيقات</h2>
-          <p style={{ color: '#64748b', fontSize: 13.5, margin: 0 }}>20 تمرين: أساسيات 5 + مستويات 5 + مسافات 4 + مساحات 3 + شاملة 3 + بصري</p>
-          <ShapesExercises />
-        </div>
-      )}
+      ) : stage === 'shapes' ? (
+        tab === 'lesson' ? <ShapesStage /> : <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px' }}><h2 style={{ margin: '8px 0 4px', color: '#0f172a' }}>التمارين — الأشكال والتطبيقات</h2><p style={{ color: '#64748b', fontSize: 13.5, margin: 0 }}>20 تمرين</p><ShapesExercises /></div>
+      ) : stage === 'barycenter' ? (
+        tab === 'lesson' ? <BarycenterStage /> : <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px' }}><h2 style={{ margin: '8px 0 4px', color: '#0f172a' }}>التمارين — مركز الأبعاد المتناسبة</h2><p style={{ color: '#64748b', fontSize: 13.5, margin: 0 }}>25 تمرين متدرج</p><BarycenterExercises /></div>
+      ) : stage === 'sections' ? (
+        tab === 'lesson' ? <SectionsStage /> : <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px' }}><h2 style={{ margin: '8px 0 4px', color: '#0f172a' }}>التمارين — مقاطع المجسمات</h2><p style={{ color: '#64748b', fontSize: 13.5, margin: 0 }}>18 تمرين + تكاملي</p><SectionsExercises /></div>
+      ) : stage === 'integration' ? (
+        tab === 'lesson' ? <IntegrationStage /> : <div style={{ maxWidth: 1100, margin: '0 auto', padding: '16px' }}><h2 style={{ margin: '8px 0 4px', color: '#0f172a' }}>التمارين — التكامل</h2><p style={{ color: '#64748b', fontSize: 13.5, margin: 0 }}>راجع تمارين المقاطع التكاملية (16-18)</p><SectionsExercises /></div>
+      ) : null}
 
       <footer
         style={{
