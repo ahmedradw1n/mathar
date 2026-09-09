@@ -3,7 +3,7 @@ import SceneShell from '../three/SceneShell'
 import CoordinateSystem3D from '../three/CoordinateSystem3D'
 import Point3D from '../three/Point3D'
 import Line3D from '../three/Line3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { lineFromPointAndDirection, lineFromTwoPoints, directionBetweenPoints, pointOnLine } from '../math/lines'
 
@@ -45,7 +45,7 @@ export default function LineStage() {
   const u2 = useMemo(() => ({ x: u[0] * 2, y: u[1] * 2, z: u[2] * 2 }), [u])
 
   return (
-    <LessonLayout title="المستقيمات في الفضاء" subtitle="نقطة + اتجاه + وسيط t — من المفهوم إلى القطعة ونصف المستقيم والتمثيلات المكافئة.">
+    <LessonLayout title="المستقيم — نقطة واتجاه يكفي" subtitle="تخيل أنك واقف في نقطة P وتمشي في اتجاه سهم u بلا توقف. كل خطوة تخطوها هي قيمة جديدة لـ t. هذا كل المستقيم.">
       {/* خريطة مفاهيمية */}
       <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: '12px 14px', marginBottom: 12 }}>
         <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 8, fontSize: 13 }}>خريطة هذه المرحلة</div>
@@ -66,9 +66,10 @@ export default function LineStage() {
       </div>
 
       {/* 1 — مفهوم المستقيم */}
-      <StepBlock num="1" title="ما هو المستقيم؟ — نقطة + اتجاه">
-        <p>المستقيم في الفضاء لا نهائي، يحدده <strong>نقطة ثابتة</strong> <MathInline tex="P" /> و <strong>شعاع اتجاه</strong> <MathInline tex="\\vec{u}" />.</p>
-        <MathBlock tex="g:\\; \\vec{x} = \\vec{p} + t\\,\\vec{u}\\quad \\text{أو}\\quad X = P + t\\cdot\\vec{u}" />
+      <StepBlock num="1" title="ما هو المستقيم؟ واقف + اتجاه + مشي">
+        <p>قف عند <MathInline tex="P" />، أمسك سهمًا <MathInline tex="\vec{u}" />، وامشِ. كل نقطة على الخط هي <MathInline tex="P" /> زائد «بعض من <MathInline tex="\vec{u}" />». البعض هذا هو <MathInline tex="t" />.</p>
+        <MathBlock label="القانون الوحيد" tex="g:\; \vec{x} = \vec{p} + t\,\vec{u}\quad \text{أو}\quad X = P + t\cdot\vec{u}" />
+        <HumanNote><MathInline tex="P" /> هو «أين تبدأ»، <MathInline tex="\vec{u}" /> هو «أين تتجه»، و <MathInline tex="t" /> يقول «كم خطوة».</HumanNote>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8, fontSize: 13, marginBottom: 8 }}>
           <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 10, padding: 10 }}><strong>P</strong> — نقطة ثابتة على المستقيم (البداية)</div>
           <div style={{ background: '#fef3c7', border: '1px solid #fde68a', borderRadius: 10, padding: 10 }}><strong>u=(a|b|c)</strong> — شعاع الاتجاه (≠0)</div>
@@ -87,8 +88,8 @@ export default function LineStage() {
       </StepBlock>
 
       {/* 2 — فهم الوسيط t */}
-      <StepBlock num="2" title="الوسيط t — أين تقع النقطة؟">
-        <p>حرّك <MathInline tex="t" /> من −5 إلى +5 وشاهد النقطة الحمراء <MathInline tex="X(t)" /> تتحرك.</p>
+      <StepBlock num="2" title="الوسيط t — دوّاسة البنزين">
+        <p><MathInline tex="t=0" /> أنت عند <MathInline tex="P" />. <MathInline tex="t=1" /> خطوة واحدة مع <MathInline tex="\vec{u}" />. <MathInline tex="t=2" /> خطوتان، <MathInline tex="t=-1" /> ترجع للخلف. حرّك المنزلق من −5 إلى +5 وشوف النقطة الحمراء تمشي وتعود.</p>
         <div style={{ height: 380, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />
@@ -171,11 +172,11 @@ export default function LineStage() {
       </StepBlock>
 
       {/* 5 — مستقيم vs قطعة vs نصف */}
-      <StepBlock num="5" title="المستقيم مقابل القطعة مقابل نصف المستقيم — مجال t">
+      <StepBlock num="5" title="مستقيم؟ قطعة؟ نصف؟ الفرق هو t">
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, fontSize: 12, marginBottom: 10 }}>
-          <div style={{ background: mode === 'line' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'line' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10 }}><strong>مستقيم</strong><br /><MathInline tex="t\\in\\mathbb{R}" /><br /><span style={{ color: '#64748b' }}>-∞→+∞</span></div>
-          <div style={{ background: mode === 'segment' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'segment' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10 }}><strong>قطعة AB</strong><br /><MathInline tex="0\\le t\\le1" /></div>
-          <div style={{ background: mode === 'ray' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'ray' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10 }}><strong>نصف مستقيم</strong><br /><MathInline tex="t\\ge0" /></div>
+          <div style={{ background: mode === 'line' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'line' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10, textAlign: 'center' }}><strong>🛣️ مستقيم</strong><br /><MathInline tex="t\in\mathbb{R}" /><br /><span style={{ color: '#64748b' }}>بلا نهاية</span></div>
+          <div style={{ background: mode === 'segment' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'segment' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10, textAlign: 'center' }}><strong>📏 قطعة</strong><br /><MathInline tex="0\le t\le1" /><br /><span style={{ color: '#64748b' }}>من A إلى B فقط</span></div>
+          <div style={{ background: mode === 'ray' ? '#f0fdf4' : 'white', border: `1px solid ${mode === 'ray' ? '#22c55e' : '#e2e8f0'}`, borderRadius: 10, padding: 10, textAlign: 'center' }}><strong>🔦 نصف</strong><br /><MathInline tex="t\ge0" /><br /><span style={{ color: '#64748b' }}>ينطلق ولا يعود</span></div>
         </div>
         <div style={{ display: 'flex', gap: 6, marginBottom: 10, flexWrap: 'wrap' }}>
           {(['line', 'segment', 'ray'] as const).map((m) => (

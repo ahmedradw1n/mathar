@@ -4,7 +4,7 @@ import CoordinateSystem3D from '../three/CoordinateSystem3D'
 import Sphere3D from '../three/Sphere3D'
 import SpherePointRelation3D from '../three/SpherePointRelation3D'
 import SpherePlaneIntersection3D from '../three/SpherePlaneIntersection3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { sphereFromCenterRadius, sphereFromCenterAndPoint, sphereFromExpandedEquation, sphereEquationLatex, pointSphereRelation, spherePlaneIntersectionDetailed } from '../math/spheres'
 import { distanceBetweenPoints } from '../math/points'
@@ -47,23 +47,19 @@ export default function SphereStage() {
   const sphere2 = useMemo(() => sphereFromCenterAndPoint({ x: M2[0], y: M2[1], z: M2[2] }, { x: A2[0], y: A2[1], z: A2[2] }), [M2, A2])
 
   return (
-    <LessonLayout title="الكرة في الفضاء" subtitle="من تعريف المسافة |MX|=r إلى معادلة الكرة وعلاقتها بالمستوى.">
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 12, marginBottom: 12 }}>
-        <div style={{ fontWeight: 800, fontSize: 13, color: '#0f172a', marginBottom: 6 }}>خريطة هذه المرحلة</div>
-        <div dir="ltr" style={{ fontFamily: 'monospace', fontSize: 11, background: '#f8fafc', borderRadius: 8, padding: 10, overflowX: 'auto' }}>
-          نقطتان → مسافة |AB| → مركز M + نصف قطر r → |MX|=r → (x−x₀)²+...=r²<br />
-          الكرة + المستوى → δ=d(M,E) → مقارنة δ مع r → لا تقاطع/تماس/دائرة<br />
-          &nbsp;&nbsp;H=proj_E(M) → نقطة تماس أو مركز دائرة، ρ=√(r²−δ²)
-        </div>
+    <LessonLayout title="الكرة — كل النقاط على نفس البُعد" subtitle="تخيل تثبت خيطًا طوله r في نقطة M وتدور به في كل الاتجاهات — السطح الذي يرسمه هو الكرة. كل نقطة عليه تبعد r تمامًا عن المركز.">
+      <div style={{ background: 'linear-gradient(135deg,#fffbeb,#eff6ff)', border: '1px solid #fde68a', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 12 }}>
+        <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 4 }}>🧭 كيف نفكر؟</div>
+        الكرة = «كل النقاط التي تبعد r عن M». منها نأخذ معادلتها، ثم نسأل: هل نقطة معينة داخلها أم عليها؟ وهل مستوى يقطعها في دائرة أم يمسها؟
       </div>
 
       {/* 1 — مفهوم */}
-      <StepBlock num="1" title="مفهوم الكرة — |MX| = r">
-        <p>الكرة هي مجموعة النقاط <MathInline tex="X" /> التي تبعد <MathInline tex="r" /> عن المركز <MathInline tex="M" />.</p>
-        <MathBlock tex="|MX| = r" />
-        <MathBlock tex="\\sqrt{(x-x_0)^2+(y-y_0)^2+(z-z_0)^2}=r" />
-        <MathBlock tex="(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2" />
-        <p>اشتقاق مباشر من مسافة نقطتين (المرحلة 7).</p>
+      <StepBlock num="1" title="الفكرة — خيط ويدور">
+        <p>ثبت نقطة <MathInline tex="M" />، وخذ خيطًا طوله <MathInline tex="r" />، ولفّه في كل الاتجاهات — طرف الخيط يرسم كرة. رياضيًا:</p>
+        <MathBlock label="التعريف" tex="|MX| = r" />
+        <MathBlock label="بالمسافة" tex="\sqrt{(x-x_0)^2+(y-y_0)^2+(z-z_0)^2}=r" />
+        <MathBlock label="الشكل الذي نستخدمه" tex="(x-x_0)^2+(y-y_0)^2+(z-z_0)^2=r^2" />
+        <HumanNote>الرُبيعان مربعان لإخفاء الجذر — أسهل للتعويض في الامتحان. تذكر: المعادلة تصف السطح فقط، أما داخل الكرة فهو <MathInline tex="|MX|<r" />.</HumanNote>
         <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white' }}>
           <SceneShell>
             <CoordinateSystem3D />
@@ -83,7 +79,7 @@ export default function SphereStage() {
       </StepBlock>
 
       {/* 3 — تفاعل */}
-      <StepBlock num="3" title="تفاعل المركز ونصف القطر">
+      <StepBlock num="3" title="حرّك المركز وكبّر الكرة — شوف المعادلة تتغير">
         <div style={{ height: 380, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />

@@ -32,19 +32,55 @@ body {
 }
 
 /* RTL: المعادلات تبقى LTR */
-.katex { direction: ltr; unicode-bidi: isolate; }
+.katex { direction: ltr; unicode-bidi: isolate; font-size: 1.05em; }
+.katex-display { overflow-x: auto; overflow-y: hidden; -webkit-overflow-scrolling: touch; scrollbar-width: thin; }
+.katex-display::-webkit-scrollbar { height: 4px; }
+.katex-display::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 999px; }
 
-/* تمرير أفقي للمعادلات إن ضاقت */
-.katex-display { overflow-x: auto; overflow-y: hidden; }
+/* حاوية المعادلة — توضيح أنها قابلة للسحب على الموبايل */
+.math-block { position: relative; }
+.math-block::after {
+  content: '⇔ اسحب';
+  position: absolute;
+  left: 8px;
+  top: 6px;
+  font-size: 10px;
+  color: #94a3b8;
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 999px;
+  padding: 1px 6px;
+  display: none;
+}
+@media (max-width: 600px) {
+  .math-block::after { display: block; }
+  .katex { font-size: 0.95em; }
+}
 
-/* تحسين المنزلقات للمس */
+/* تحسين المنزلقات للمس — هدف لمس 44px حسب توصيات Apple/Google */
 input[type="range"] {
-  height: 28px;
+  height: 44px;
   touch-action: manipulation;
+  width: 100%;
+}
+input[type="range"]::-webkit-slider-thumb {
+  width: 22px;
+  height: 22px;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
 }
 
 /* أزرار سهلة اللمس */
-button { touch-action: manipulation; }
+button { touch-action: manipulation; min-height: 38px; }
+@media (max-width: 600px) {
+  button { min-height: 44px; font-size: 15px !important; }
+}
+
+/* بطاقات الشرح — راحة للعين على الموبايل */
+.step-block p { margin: 8px 0; }
+.step-block ul { padding-inline-start: 20px; }
 
 /* شبكة الدرس responsive */
 @media (min-width: 900px) {
@@ -60,6 +96,14 @@ button { touch-action: manipulation; }
 
 @media (max-width: 899px) {
   .lesson-grid > div:first-child {
-    height: 340px !important;
+    height: 360px !important;
   }
+  .lesson-grid { gap: 12px !important; }
+}
+
+@media (max-width: 600px) {
+  body { font-size: 15px; line-height: 1.8; }
+  .lesson-grid > div:first-child { height: 320px !important; }
+  h1 { font-size: 1.45rem !important; }
+  h3 { font-size: 15px !important; }
 }

@@ -4,7 +4,7 @@ import CoordinateSystem3D from '../three/CoordinateSystem3D'
 import Point3D from '../three/Point3D'
 import Vector3D from '../three/Vector3D'
 import Plane3D from '../three/Plane3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { planeFromPointAndNormal, planeFromThreePoints, planeEquationString, isPointOnPlane, distancePointPlane, planeInterceptForm } from '../math/planes'
 import { cross } from '../math/vectors'
@@ -66,14 +66,14 @@ export default function PlaneStage() {
   const intercept = useMemo(() => planeInterceptForm(cutPlane), [cutPlane])
 
   return (
-    <LessonLayout title="المستوى في الفضاء" subtitle="من سطح الطاولة إلى المعادلة ax+by+cz=d — مع الشعاع الناظم، الانتماء، والطرق المختلفة لتحديده.">
-      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 12, padding: '10px 12px', fontSize: 12.5, color: '#1e40af', marginBottom: 12 }}>
-        <strong>تذكير من المرحلة السابقة:</strong> الجداء السلمي صفر يعني تعامد — وهذا أساس الشعاع الناظم: <MathInline tex="\\vec{n}\\cdot\\vec{u}=0" /> لكل <MathInline tex="\\vec{u}" /> داخل المستوى.
+    <LessonLayout title="المستوى — طاولة لا نهائية" subtitle="تخيل طاولة تمتد بلا حدود في كل الاتجاهات. كيف نصفها بمعادلة واحدة؟ المفتاح هو سهم عمودي عليها يسمى 'الناظم'.">
+      <div style={{ background: 'linear-gradient(135deg,#f5f3ff,#eff6ff)', border: '1px solid #ddd6fe', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 12 }}>
+        <strong style={{ color: '#0f172a' }}>🔗 تذكير سريع:</strong> تعلمنا أن <MathInline tex="\vec{a}\cdot\vec{b}=0" /> يعني زاوية 90°. المستوى كله مبني على هذه الفكرة: الناظم <MathInline tex="\vec{n}" /> عمودي على كل سهم داخل الطاولة — لذلك <MathInline tex="\vec{n}\cdot\vec{u}=0" /> دومًا.
       </div>
 
       {/* 1 */}
-      <StepBlock num="1" title="ما هو المستوى؟ — سطح لا نهائي">
-        <p>تخيل سطح طاولة ممتد بلا حدود، أو جدار، أو ورقة. في الرياضيات، المستوى سطح مستوٍ لا نهائي يحدده 3 نقاط غير على استقامة واحدة.</p>
+      <StepBlock num="1" title="ما هو المستوى؟ تخيل طاولة بلا حواف">
+        <p>لا تفكر في معادلة أولًا. فكر في طاولة مطبخ — لكن بلا حواف، تمتد للأبد. أي 3 نقاط لا تقع على خط واحد تكفي لتثبيتها، مثل 3 أرجل للطاولة.</p>
         <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />
@@ -102,12 +102,12 @@ export default function PlaneStage() {
       </StepBlock>
 
       {/* 3 */}
-      <StepBlock num="3" title="معادلة المستوى — من n·(x−P₀)=0 إلى ax+by+cz=d">
-        <p>نبدأ بنقطة <MathInline tex="P_0(x_0|y_0|z_0)" /> وشعاع ناظم <MathInline tex="\\vec{n}=(a,b,c)" />:</p>
-        <MathBlock tex="\\vec{n}\\cdot(\\vec{x}-\\vec{P_0})=0" />
-        <MathBlock tex="a(x-x_0)+b(y-y_0)+c(z-z_0)=0" />
-        <MathBlock tex="ax+by+cz = ax_0+by_0+cz_0 = d" />
-        <p>حيث <MathInline tex="d = ax_0+by_0+cz_0" /> و الصيغة العامة <MathInline tex="ax+by+cz+d'=0" /> مع <MathInline tex="d'=-d" /> (حسب الاصطلاح).</p>
+      <StepBlock num="3" title="من الطاولة إلى المعادلة — خطوة بخطوة">
+        <p>عندنا نقطة على الطاولة <MathInline tex="P_0" /> وسهم عمودي <MathInline tex="\vec{n}=(a,b,c)" />. أي نقطة أخرى <MathInline tex="X" /> تكون على الطاولة فقط إذا كان السهم <MathInline tex="\vec{P_0X}" /> ملاصقًا للطاولة، أي عمودي على <MathInline tex="\vec{n}" />:</p>
+        <MathBlock label="الشرط الهندسي" tex="\vec{n}\cdot(\vec{x}-\vec{P_0})=0" />
+        <MathBlock label="نفكّ الضرب" tex="a(x-x_0)+b(y-y_0)+c(z-z_0)=0" />
+        <MathBlock label="الشكل النهائي الذي تحفظه" tex="ax+by+cz = d\quad\text{حيث } d=ax_0+by_0+cz_0" />
+        <HumanNote>لا تحفظ <MathInline tex="d" /> — هو ببساطة «ناتج ضرب الناظم في نقطة معلومة». غيّر <MathInline tex="P_0" /> أو <MathInline tex="\vec{n}" /> في المشهد وشوف المعادلة تتغير حيًا.</HumanNote>
         <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />
@@ -144,8 +144,8 @@ export default function PlaneStage() {
       </StepBlock>
 
       {/* 5 */}
-      <StepBlock num="5" title="هل النقطة تنتمي إلى المستوى؟ — بالتعويض">
-        <p>المستوى <MathInline tex="E: ax+by+cz+d=0" /> — نعوض P لنرى هل تحقق.</p>
+      <StepBlock num="5" title="هل النقطة على الطاولة أم لا؟ جرّب التعويض">
+        <p>عندك معادلة الطاولة <MathInline tex="E: ax+by+cz+d=0" /> ونقطة <MathInline tex="P" />. عوض أرقامها — إذا الناتج صفر، فهي عليها. إذا لا، فهي طائرة فوقها أو تحتها.</p>
         <div style={{ height: 340, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />

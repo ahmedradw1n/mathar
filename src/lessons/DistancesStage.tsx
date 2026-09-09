@@ -51,21 +51,20 @@ export default function DistancesStage() {
 
 
   return (
-    <LessonLayout title="المسافات والمساقط" subtitle="من طول الشعاع إلى مسافة نقطة عن مستقيم ومستوى — الفكرة الهندسية قبل الصيغة.">
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 12, marginBottom: 12 }}>
-        <div style={{ fontWeight: 800, fontSize: 13, color: '#0f172a', marginBottom: 6 }}>خريطة هذه المرحلة</div>
-        <div dir="ltr" style={{ fontFamily: 'monospace', fontSize: 11, background: '#f8fafc', borderRadius: 8, padding: 10, overflowX: 'auto' }}>
-          نقاط → شعاع AB → طول |AB| (فيثاغورس 3D) → الجداء السلمي → التعامد → المسقط → المسافة<br />
-          &nbsp;&nbsp;├─ مسقط على مستقيم: t=((A-P)·u)/|u|² → H=P+t·u → d=|AH|<br />
-          &nbsp;&nbsp;└─ مسقط على مستوى: λ=(n·A−d)/|n|² → H=A−λn → d=|AH| (∥n)
+    <LessonLayout title="المسافات — أقرب طريق هو العمودي" subtitle="أقصر مسافة بينك وبين خط أو طاولة هي دائمًا الخط العمودي. ليس المائل، ليس الأقرب عشوائيًا — بل العمودي تمامًا. هذا كل السر.">
+      <div style={{ background: 'linear-gradient(135deg,#f0fdf4,#eff6ff)', border: '1px solid #bbf7d0', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 12 }}>
+        <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 4 }}>🎯 الفكرة في جملة</div>
+        المسافة = طول العمود. لإيجادها: نسقط النقطة عموديًا على الخط (أو المستوى) → نحصل على <MathInline tex="H" /> → المسافة = <MathInline tex="|AH|" />.
+        <div style={{ marginTop: 8, display: 'grid', gap: 6, fontSize: 12.5 }}>
+          <div>• على مستقيم: <MathInline tex="t=\frac{(A-P)\cdot u}{|u|^2}" /> ثم <MathInline tex="H=P+t u" /></div>
+          <div>• على مستوى: <MathInline tex="H=A-\lambda n" /> حيث <MathInline tex="\lambda=\frac{n\cdot A-d}{|n|^2}" /></div>
         </div>
-        <div style={{ fontSize: 11, color: '#64748b', marginTop: 6 }}>يربط: شعاع الاتجاه، الشعاع الناظم، الجداء، معادلة المستوى، المستقيم الوسيطي.</div>
       </div>
 
       {/* 1 — بين نقطتين */}
-      <StepBlock num="1" title="المسافة بين نقطتين — AB = B−A">
-        <p>أقصر مسافة بين نقطتين هي طول الشعاع بينهما.</p>
-        <MathBlock tex="AB = B-A = (x_2-x_1,\; y_2-y_1,\; z_2-z_1),\quad |AB| = \\sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}" />
+      <StepBlock num="1" title="بين نقطتين — فيثاغورس بثلاثة أبعاد">
+        <p>بين نقطتين، أقصر طريق هو الخط المستقيم بينهما — طول السهم <MathInline tex="\vec{AB}" />. هو نفسه فيثاغورس لكن بثلاثة حدود.</p>
+        <MathBlock label="القانون" tex="|AB| = \sqrt{(x_2-x_1)^2+(y_2-y_1)^2+(z_2-z_1)^2}" />
         <div style={{ height: 340, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell>
             <CoordinateSystem3D />

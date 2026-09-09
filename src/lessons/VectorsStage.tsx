@@ -6,7 +6,7 @@ import Vector3D from '../three/Vector3D'
 import AngleArc from '../three/AngleArc'
 import RightAngleMark from '../three/RightAngleMark'
 import CubeFrame from '../three/CubeFrame'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { add, sub, scale, dot, length, angleBetweenDeg, areOrthogonal, areParallel, vectorBetweenPoints, projectVectorOnto } from '../math/vectors'
 
@@ -59,11 +59,13 @@ export default function VectorsStage() {
   const [cubeTab, setCubeTab] = useState<'ortho' | 'angle'>('ortho')
 
   return (
-    <LessonLayout title="الأشعة والجداء السلمي" subtitle="من مفهوم الشعاع إلى الجداء السلمي، الزوايا، التعامد، التوازي، والمسقط — كل ذلك في فضاء تفاعلي.">
-      <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 12, padding: '10px 12px', fontSize: 12.5, color: '#1e40af', lineHeight: 1.6, marginBottom: 12 }}>
-        <strong>خريطة هذه المرحلة:</strong> الشعاع (مركبات) → طوله → الجداء السلمي → الزاوية → التعامد (·=0) → التوازي (b=λa) → المسقط — كل مفهوم يبني على السابق.
-        <br />
-        <span style={{ color: '#475569' }}>الجداء يخبرنا عن العلاقة الاتجاهية: موجب=حادة، صفر=قائمة، سالب=منفرجة — شاهد القوس يتغير.</span>
+    <LessonLayout title="الأشعة — أسهم لها اتجاه وطول" subtitle="الشعاع ليس نقطة. هو 'حركة' من مكان لآخر. فهمه يفتح لك كل هندسة الفضاء: الزوايا، التعامد، والمسقط.">
+      <div style={{ background: 'linear-gradient(135deg,#f5f3ff,#eff6ff)', border: '1px solid #ddd6fe', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 14 }}>
+        <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 4 }}>🗺️ كيف نمشي في الدرس؟</div>
+        نبدأ بسهم بسيط <MathInline tex="\vec{AB}" /> → نعرف طوله → نتعلم كيف نضرب سهمين ببعض (الجداء) → نعرف منه هل الزاوية حادة أم قائمة → ثم متى يكون السهمان عموديين أو متوازيين → وأخيرًا «ظل» سهم على آخر (المسقط).
+        <div style={{ marginTop: 8, background: 'white', border: '1px solid #e2e8f0', borderRadius: 10, padding: '8px 10px', fontSize: 12.5 }}>
+          💡 <strong>الفكرة المفتاحية:</strong> الجداء السلمي هو «كاشف العلاقة» — إذا كان موجبًا: الزاوية حادة، صفرًا: قائمة تمامًا، سالبًا: منفرجة. جرّب وشوف القوس البنفسجي يتغير.
+        </div>
       </div>
       <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 10, marginBottom: 12 }}>
         <div style={{ fontWeight: 700, fontSize: 12, color: '#0f172a', marginBottom: 6 }}>وسيلة الإيضاح — الألوان</div>
@@ -75,8 +77,9 @@ export default function VectorsStage() {
         </div>
       </div>
       {/* 1 — مفهوم الشعاع */}
-      <StepBlock num="1" title="ما هو الشعاع؟ — من A إلى B">
-        <p>الشعاع له <strong>بداية</strong> و<strong>نهاية</strong> و<strong>اتجاه</strong> و<strong>طول</strong>. النقطة موقع، الشعاع حركة.</p>
+      <StepBlock num="1" title="ما هو الشعاع؟ تخيل سهمًا">
+        <p>النقطة تقول «أنا هنا». الشعاع يقول «تحرك هكذا». له <strong>بداية</strong> و<strong>نهاية</strong> و<strong>اتجاه</strong>. في المشهد: النقطة الزرقاء <MathInline tex="A" /> والحمراء <MathInline tex="B" />، والسهم البرتقالي بينهما هو <MathInline tex="\vec{AB}" /> — اسحبه وشوف أرقامه تتغير.</p>
+        <HumanNote>لو <MathInline tex="A" /> و <MathInline tex="B" /> في نفس المكان، الشعاع يختفي — طوله صفر. هذا مهم بعد قليل.</HumanNote>
         <div style={{ display: 'grid', gap: 12 }}>
           <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white' }}>
             <SceneShell>
@@ -100,8 +103,8 @@ export default function VectorsStage() {
               <AxisSlider label="z" value={B[2]} color="#3b82f6" onChange={(v) => setB([B[0], B[1], v])} />
             </div>
           </div>
-          <MathBlock tex={`\\vec{AB}=B-A=(${B[0]}-${A[0]},\\,${B[1]}-${A[1]},\\,${B[2]}-${A[2]})=(${AB.x},${AB.y},${AB.z})`} />
-          <HintBox>حرّك A و B وشاهد الشعاع البرتقالي يتبعهما فوراً. المركبات تتحدث حياً — هذا هو <MathInline tex="\vec{AB}=B-A" />.</HintBox>
+          <MathBlock label="كيف نحسبه؟ ببساطة: النهاية ناقص البداية" tex={`\\vec{AB}=B-A=(${B[0]}-${A[0]},\\,${B[1]}-${A[1]},\\,${B[2]}-${A[2]})=(${AB.x},${AB.y},${AB.z})`} />
+          <HintBox>حرّك أي منزلق — الشعاع البرتقالي يلحق فورًا. هذا هو <MathInline tex="\vec{AB}=B-A" /> حيّ أمامك، ليس مجرد حروف.</HintBox>
         </div>
       </StepBlock>
 
@@ -195,9 +198,9 @@ export default function VectorsStage() {
       </StepBlock>
 
       {/* 6 — الجداء السلمي */}
-      <StepBlock num="6" title="الجداء السلمي — a·b = a₁b₁ + a₂b₂ + a₃b₃">
-        <p>عملية بين شعاعين نتيجتها <strong>عدد</strong>، ليست شعاعاً. تستخدم للزوايا والتعامد والمساقط.</p>
-        <MathBlock tex="a\cdot b = a_1b_1+a_2b_2+a_3b_3" />
+      <StepBlock num="6" title="الجداء السلمي — ضرب سهمين يعطي رقمًا">
+        <p>نضرب سهمين والنتيجة <strong>رقم</strong> فقط — ليس سهمًا جديدًا. لماذا؟ لأنه يخبرنا «كم يساعد أحدهما الآخر في اتجاهه». تخيل شخصين يدفعان صندوقًا: إذا دفعا بنفس الاتجاه، الرقم كبير وموجب. إذا تعاكسا، سالب. إذا أحدهما يدفع جانبًا (90°)، فلا يساعد أبدًا — الرقم صفر.</p>
+        <MathBlock label="القانون ببساطة" tex="a\cdot b = a_1b_1+a_2b_2+a_3b_3" />
         <div style={{ height: 380, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 10 }}>
           <SceneShell cameraPosition={[8, 7, 7]}>
             <CoordinateSystem3D />
@@ -231,14 +234,15 @@ export default function VectorsStage() {
       </StepBlock>
 
       {/* 7 — الزاوية */}
-      <StepBlock num="7" title="الزاوية بين شعاعين — cos α = (a·b)/(|a||b|)">
-        <MathBlock tex={`\\cos\\alpha = \\frac{a\\cdot b}{|a||b|}=\\frac{${dotVal}}{${lenA.toFixed(2)}\\cdot${lenB.toFixed(2)}}=\\frac{${dotVal}}{${(lenA * lenB).toFixed(2)}}=${lenA * lenB === 0 ? '—' : (dotVal / (lenA * lenB)).toFixed(3)}} \\;\\Rightarrow\\; \\alpha=${angDeg.toFixed(1)}^\\circ`} />
-        <p>القوس البنفسجي في المشهد يمثل الزاوية. حرّك a أو b وشاهدها تتغير حياً.</p>
+      <StepBlock num="7" title="كم الزاوية بين السهمين؟">
+        <p>نفس فكرة المثلث، لكن في الفضاء. الجداء + الطولين يعطينا الزاوية مباشرة. لا تحفظ، فقط اعرف: كلما كبُر الجداء، صغُرت الزاوية.</p>
+        <MathBlock label="من الجداء إلى الزاوية" tex={`\\cos\\alpha = \\frac{a\\cdot b}{|a||b|}=\\frac{${dotVal}}{${lenA.toFixed(2)}\\cdot${lenB.toFixed(2)}}=\\frac{${dotVal}}{${(lenA * lenB).toFixed(2)}}=${lenA * lenB === 0 ? '—' : (dotVal / (lenA * lenB)).toFixed(3)}} \\;\\Rightarrow\\; \\alpha=${angDeg.toFixed(1)}^\\circ`} />
+        <HumanNote>القوس البنفسجي هو الزاوية الحقيقية — حرّك <MathInline tex="a" /> أو <MathInline tex="b" /> وشوف الرقم يتبعه. عند 90° يصبح الجداء صفرًا تمامًا.</HumanNote>
       </StepBlock>
 
       {/* 8 — التعامد */}
-      <StepBlock num="8" title="التعامد — a·b = 0 ⇔ الزاوية 90°">
-        <p>حرّك أحد الشعاعين حتى تصبح الزاوية 90° — سيظهر باللون الأخضر مع علامة.</p>
+      <StepBlock num="8" title="متى نقول عمودي؟ عندما الجداء = صفر">
+        <p>ببساطة: إذا كان <MathInline tex="a\cdot b = 0" /> فالسهمين متعامدان — كزاوية الغرفة. جرّب تحريك المنزلقات حتى ترى اللون الأخضر وعلامة الزاوية القائمة ✓. هذا الاختبار سيتكرر في كل الفصول القادمة.</p>
         <div style={{ height: 300, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 8 }}>
           <SceneShell>
             <CoordinateSystem3D />
@@ -296,9 +300,9 @@ export default function VectorsStage() {
       </StepBlock>
 
       {/* 11 — المسقط */}
-      <StepBlock num="11" title="المسقط القائم للشعاع — كم من a في اتجاه b؟">
-        <p>المسقط هو «ظل» a على b. طوله <MathInline tex="|a|\\cos\\alpha" /> واتجاهه مع b.</p>
-        <MathBlock tex="proj_b(a)=\frac{a\cdot b}{|b|^2}\,b" />
+      <StepBlock num="11" title="المسقط — ظلّ سهم على سهم آخر">
+        <p>تخيل ضوءًا فوق <MathInline tex="a" /> وظلّه يقع على <MathInline tex="b" />. هذا الظل هو المسقط — «كم من <MathInline tex="a" /> يمشي فعلًا في اتجاه <MathInline tex="b" />». إذا كانا متعامدين، الظل صفر.</p>
+        <MathBlock label="قانون الظل" tex="proj_b(a)=\frac{a\cdot b}{|b|^2}\,b" />
         <div style={{ height: 360, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white', marginBottom: 8 }}>
           <SceneShell>
             <CoordinateSystem3D />

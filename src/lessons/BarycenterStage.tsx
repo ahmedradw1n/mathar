@@ -5,7 +5,7 @@ import Barycenter2D3D from '../three/Barycenter2D3D'
 import Barycenter3D3D from '../three/Barycenter3D3D'
 import BarycenterGrouping3D from '../three/BarycenterGrouping3D'
 import BarycenterTetra3D from '../three/BarycenterTetra3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { weightedBarycenter2, weightedBarycenter3, weightedBarycenter4, associativeBarycenterExample, ratioFromWeights, weightedPointOnSegment, triangleCentroidWeighted } from '../math/barycenter'
 import type { Point3 } from '../math/types'
@@ -49,18 +49,25 @@ export default function BarycenterStage() {
   const faceCent = triangleCentroidWeighted(TB, TC, TD)
 
   return (
-    <LessonLayout title="مركز الأبعاد المتناسبة (النقاط المثقلة)" subtitle="M.A.M — من النقطة المثقلة إلى التجميع والإحداثيات وتطبيقات رباعي الوجوه والمكعب.">
+    <LessonLayout title="مركز الأوزان — أين تتوازن النقاط؟" subtitle="تخيل نقطتين بأوزان مختلفة على عصا — أين تضع إصبعك لتتوازن؟ كلما ثقلت نقطة جذبت التوازن نحوها. هذه هي فكرة النقاط المثقلة.">
       {/* 1 */}
-      <StepBlock num="1" title="النقطة المثقلة — (A, α)">
-        <p>النقطة المثقلة هي زوج <MathInline tex="(A,\\alpha)" /> حيث <MathInline tex="A" /> نقطة و <MathInline tex="\\alpha" /> وزنها. الوزن الموجب يجذب المركز نحو النقطة، السالب يبعده، والصفر يعني أن النقطة لا تؤثر. يشترط دومًا <MathInline tex="\\sum \\alpha_i \\ne 0" /> وإلا لا يوجد مركز.</p>
-        <MathBlock tex="(A,\\alpha),\\; (B,\\beta),\\; \\sum\\alpha_i\\ne0 \\;\\Rightarrow\\; \\exists! G: \\sum \\alpha_i\\vec{GA_i}=0" />
-        <HintBox>الوزن ليس مسافة؛ هو معامل يحدد ثقل النقطة في المتوسط الموزون.</HintBox>
+      <StepBlock num="1" title="ما معنى نقطة مثقلة؟ (A, α)">
+        <p>خذ نقطة <MathInline tex="A" /> وضع عليها وزنًا <MathInline tex="\alpha" /> — كأنك تضع ثقلًا على طاولة. الوزن الموجب يشد المركز نحوه، السالب يدفعه بعيدًا، والصفر كأن النقطة غير موجودة.</p>
+        <p>الشرط الوحيد: مجموع الأوزان لا يكون صفرًا — وإلا لا يوجد توازن.</p>
+        <MathBlock label="التعريف الجميل" tex="(A,\alpha),\; (B,\beta),\; \sum\alpha_i\ne0 \;\Rightarrow\; \exists! G: \sum \alpha_i\vec{GA_i}=0" />
+        <HumanNote>الوزن ليس مسافة — هو «قوة الجذب». نقطتان بوزن 2 و 1؟ المركز أقرب لصاحب الوزن 2 بمرتين. جرّب المنزلقات بعد قليل وشوف.</HumanNote>
       </StepBlock>
 
       {/* 2 */}
-      <StepBlock num="2" title="مركز نقطتين — اشتقاق الشعاع">
-        <MathBlock tex="\\alpha\\vec{GA}+\\beta\\vec{GB}=0 \\;\\Rightarrow\\; \\vec{AG}=\\frac{\\beta}{\\alpha+\\beta}\\vec{AB},\\; \\vec{BG}=\\frac{\\alpha}{\\alpha+\\beta}\\vec{BA}" />
-        <p>حالات: <MathInline tex="\\alpha=\\beta" /> → منتصف. نفس الإشارة → داخل القطعة. إشارتان مختلفتان → خارج. وزن صفر → النقطة الأخرى. مجموع صفر → لا مركز.</p>
+      <StepBlock num="2" title="بين نقطتين — أين يقع التوازن؟">
+        <MathBlock label="القانون" tex="\alpha\vec{GA}+\beta\vec{GB}=0 \;\Rightarrow\; \vec{AG}=\frac{\beta}{\alpha+\beta}\vec{AB}" />
+        <p>بكلام بسيط:</p>
+        <div style={{ display: 'grid', gap: 6, fontSize: 13.5 }}>
+          <div>• <MathInline tex="\alpha=\beta" /> → المركز في المنتصف تمامًا (توازن متساوٍ)</div>
+          <div>• نفس الإشارة → المركز بين النقطتين، أقرب للأثقل</div>
+          <div>• إشارتان مختلفتان → المركز خارج القطعة (كأن وزنًا سالبًا يدفعه)</div>
+          <div>• وزن صفر → كأن النقطة غير موجودة</div>
+        </div>
         <div style={{ height: 340, borderRadius: 16, overflow: 'hidden', border: '1px solid #e2e8f0', background: 'white' }}>
           <SceneShell>
             <CoordinateSystem3D />

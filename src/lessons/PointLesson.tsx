@@ -2,7 +2,7 @@ import SceneShell from '../three/SceneShell'
 import CoordinateSystem3D from '../three/CoordinateSystem3D'
 import Point3D from '../three/Point3D'
 import Vector3D from '../three/Vector3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { length as vecLength } from '../math/vectors'
 
@@ -18,8 +18,8 @@ export default function PointLesson({
 
   return (
     <LessonLayout
-      title="النقطة والإحداثيات في الفضاء"
-      subtitle="أول خطوة لفهم الفضاء ثلاثي الأبعاد: كيف نحدد مكان نقطة بدقة بثلاثة أرقام فقط."
+      title="النقطة في الفضاء — أين أنت بالضبط؟"
+      subtitle="تخيل أنك تصف لصديق مكان كتاب في غرفة: 'امشِ 3 خطوات يمينًا، 2 للأمام، وارفعه 4 فوق الأرض' — هذه هي الإحداثيات الثلاثة، لا أكثر."
     >
       <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 14 }}>
         {/* المشهد sticky على الديسكتوب */}
@@ -157,79 +157,82 @@ export default function PointLesson({
         </div>
 
         {/* الشرح */}
-        <StepBlock num={1} title="ماذا يعني أن النقطة لها 3 إحداثيات؟">
+        <StepBlock num={1} title="ليش نحتاج 3 أرقام؟">
           <p>
-            في المستوى نحتاج رقمين <MathInline tex="(x,y)" /> لنحدد نقطة. في الفضاء نحتاج{' '}
-            <strong>ثلاثة</strong>: <MathInline tex="A(a\,|\,b\,|\,c)" /> أو <MathInline tex="A(a,b,c)" />.
+            في الورقة (2D) يكفي تقول <MathInline tex="(x,y)" /> — يمين/يسار وفوق/تحت. لكن في الغرفة الحقيقية لازم تضيف <strong>الارتفاع</strong>. بلا <MathInline tex="z" /> ما تعرف هل الكتاب على الأرض أم على الرف.
           </p>
           <p>
-            كل إحداثية تقول كم نتحرك على محور: <span style={{ color: '#ef4444', fontWeight: 700 }}>x</span>{' '}
-            (أحمر)، <span style={{ color: '#22c55e', fontWeight: 700 }}>y</span> (أخضر)،{' '}
-            <span style={{ color: '#3b82f6', fontWeight: 700 }}>z</span> (أزرق، الارتفاع).
+            لذلك أي نقطة في الفضاء نكتبها <MathInline tex="A(a\,|\,b\,|\,c)" /> — ثلاثة أرقام تحكي القصة كاملة:
           </p>
-          <MathBlock tex="A(3\,|\,2\,|\,4)\;\; \Longleftrightarrow\;\; x=3,\; y=2,\; z=4" />
-          <HintBox>
-            حرّك المنزلقات أعلاه وشاهد النقطة <strong>A</strong> تتحرك فوراً مع إسقاطاتها المتقطعة على
-            المحاور. هذه الخطوط المتقطعة هي «ظل» النقطة على المستوي <MathInline tex="xy" />.
-          </HintBox>
+          <div style={{ display: 'grid', gap: 8, margin: '10px 0' }}>
+            <div style={{ background: '#fef2f2', border: '1px solid #fecaca', borderRadius: 10, padding: '10px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#ef4444' }} /> <strong style={{ color: '#ef4444' }}>x</strong> — كم خطوة يمين/يسار (المحور الأحمر)
+            </div>
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: '10px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#22c55e' }} /> <strong style={{ color: '#22c55e' }}>y</strong> — كم خطوة أمام/خلف (الأخضر)
+            </div>
+            <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 10, padding: '10px 12px', display: 'flex', gap: 8, alignItems: 'center' }}>
+              <span style={{ width: 10, height: 10, borderRadius: '50%', background: '#3b82f6' }} /> <strong style={{ color: '#3b82f6' }}>z</strong> — كم ترفع لفوق (الأزرق)
+            </div>
+          </div>
+          <MathBlock label="القاعدة ببساطة" tex="A(3\,|\,2\,|\,4)\;\; \Longleftrightarrow\;\; x=3,\; y=2,\; z=4" />
+          <HumanNote>
+            جرّب الآن: حرّك منزلق <MathInline tex="z" /> وشوف النقطة البنفسجية تطلع وتنزل مثل مصعد. الخطوط المتقطعة؟ هذا ظلّها على الأرض — يساعدك تعرف مكانها حتى لو دوّرت المشهد.
+          </HumanNote>
         </StepBlock>
 
-        <StepBlock num={2} title="نظام الإحداثيات — نقطة الأصل والمحاور">
+        <StepBlock num={2} title="نقطة الصفر — أين يبدأ كل شيء؟">
           <p>
-            نقطة الأصل هي <MathInline tex="O(0,0,0)" />، ملتقى المحاور الثلاثة. كل نقطة أخرى تُقاس
-            انطلاقاً منها. جرّب تدوير المشهد بإصبع واحد، والتكبير بإصبعين (أو عجلة الماوس)، ثم اضغط «إعادة
-            الضبط».
+            كل القياسات تبدأ من <MathInline tex="O(0,0,0)" /> — زاوية الغرفة حيث تلتقي الجدران والأرض. منها نعدّ: 3 يمين، 2 أمام، 4 فوق.
           </p>
           <p>
-            قاعدة اليد اليمنى: إذا أشرت بإبهامك نحو <MathInline tex="x" /> وسبابتك نحو{' '}
-            <MathInline tex="y" />، فإن وسطاك تشير نحو <MathInline tex="z" />.
+            <strong>جرّب بيدك:</strong> افتح يدك اليمنى — الإبهام = <MathInline tex="x" /> ، السبابة = <MathInline tex="y" /> ، الوسطى = <MathInline tex="z" />. هكذا يتذكر الطلاب الاتجاهات دومًا.
+          </p>
+          <HumanNote>دوّر المشهد بإصبع واحد، كبّر بإصبعين، وإذا ضعت اضغط «إعادة الضبط ↺» فوق المشهد.</HumanNote>
+        </StepBlock>
+
+        <StepBlock num={3} title="كيف تقرأ الإحداثيات من المشهد؟">
+          <p>
+            شايف الخط المتقطع النازل من النقطة البنفسجية؟ ينزل عموديًا إلى الأرض عند <MathInline tex="(x,y,0)" />، ثم يتفرع خطان إلى المحور الأحمر والأخضر. هكذا تعرف <MathInline tex="x" /> و <MathInline tex="y" />، والارتفاع هو <MathInline tex="z" />.
+          </p>
+          <MathBlock label="شعاع الموضع" tex="\vec{OA} = (x_A,\; y_A,\; z_A)\quad\text{— سهم من الأصل إلى النقطة}" />
+          <HumanNote>
+            السهم البرتقالي <MathInline tex="\vec{OA}" /> هو نفسه عنوان النقطة، بس على شكل سهم. النقطة تقول «أنا هنا»، والشعاع يقول «هكذا تصل إليّ من الصفر».
+          </HumanNote>
+        </StepBlock>
+
+        <StepBlock num={4} title="مثال حي — كم يبعد الكتاب عن الزاوية؟">
+          <p>
+            خلينا نحسب المسافة من الزاوية <MathInline tex="O" /> إلى <MathInline tex="A(3|2|4)" />. كأنك تمدّ خيطًا مستقيمًا:
+          </p>
+          <MathBlock label="فيثاغورس في الفضاء" tex="|\vec{OA}| = \sqrt{x^2 + y^2 + z^2} = \sqrt{3^2+2^2+4^2} = \sqrt{9+4+16}=\sqrt{29}\approx 5.39" />
+          <p>
+            والآن نقطتك الحالية <MathInline tex={`A(${x}|${y}|${z})`} /> تبعد <MathInline tex={`\\sqrt{${x}^2+${y}^2+${z}^2}=${len.toFixed(2)}`} /> — حرّك المنزلقات وشوف الرقم يتغير لحظيًا. لا تحفظ القانون، شوفه يشتغل.
           </p>
         </StepBlock>
 
-        <StepBlock num={3} title="قراءة الإحداثيات — من المشهد إلى الأرقام">
-          <p>
-            انظر إلى النقطة <MathInline tex="A" /> في المشهد. الخط المتقطع العمودي ينزل إلى{' '}
-            <MathInline tex="(x,y,0)" /> ثم خطان أفقيان إلى المحورين. هكذا تقرأ{' '}
-            <MathInline tex="x" /> و <MathInline tex="y" /> و <MathInline tex="z" />.
-          </p>
-          <MathBlock tex="\vec{OA} = (x_A,\; y_A,\; z_A)\quad\text{— شعاع الموضع}" />
-          <p>
-            شعاع الموضع <MathInline tex="\vec{OA}" /> هو السهم البرتقالي من <MathInline tex="O" /> إلى{' '}
-            <MathInline tex="A" />. مركباته هي نفس إحداثيات <MathInline tex="A" />.
-          </p>
-        </StepBlock>
-
-        <StepBlock num={4} title="مثال محلول — كم طول شعاع الموضع؟">
-          <p>
-            للنقطة <MathInline tex="A(3|2|4)" />:
-          </p>
-          <MathBlock tex="|\vec{OA}| = \sqrt{x^2 + y^2 + z^2} = \sqrt{3^2+2^2+4^2} = \sqrt{9+4+16}=\sqrt{29}\approx 5.39" />
-          <p>
-            مع إحداثياتك الحالية <MathInline tex={`A(${x}|${y}|${z})`} /> الطول ={' '}
-            <MathInline tex={`\\sqrt{${x}^2+${y}^2+${z}^2}=${len.toFixed(2)}`} /> — يتحدث حياً مع كل حركة.
-          </p>
-        </StepBlock>
-
-        <StepBlock num={5} title="الفرق بين النقطة والشعاع (مهم)">
+        <StepBlock num={5} title="انتبه — النقطة ليست الشعاع!">
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
-            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: 10 }}>
+            <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 12, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 20 }}>📍</div>
               <strong>نقطة A</strong>
               <br />
-              موقع ثابت
+              <span style={{ fontSize: 13, color: '#475569' }}>عنوان ثابت — «أين؟»</span>
               <br />
               <MathInline tex="A(3,2,4)" />
             </div>
-            <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 10, padding: 10 }}>
+            <div style={{ background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 12, padding: 12, textAlign: 'center' }}>
+              <div style={{ fontSize: 20 }}>➡️</div>
               <strong>شعاع ⃗OA</strong>
               <br />
-              سهم له طول واتجاه
+              <span style={{ fontSize: 13, color: '#475569' }}>طريق — «كيف أصل؟»</span>
               <br />
               <MathInline tex="\vec{OA}=(3,2,4)" />
             </div>
           </div>
-          <p style={{ marginTop: 8 }}>
-            نفس الأرقام، معنى مختلف. النقطة «أين»، الشعاع «كيف نصل».
-          </p>
+          <HumanNote>
+            نفس الأرقام، لكن المعنى يختلف تمامًا. إذا خلطت بينهما في الامتحان، ستخسر نقاطًا سهلة. تذكر: النقطة بيت، والشعاع طريق إليه.
+          </HumanNote>
         </StepBlock>
       </div>
     </LessonLayout>

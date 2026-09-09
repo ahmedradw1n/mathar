@@ -50,13 +50,13 @@ export default function AdvancedStage() {
   const Gt = useMemo(() => tetrahedronCentroid(QA, QB, QC, QD), [QA, QB, QC, QD])
 
   return (
-    <LessonLayout title="التقاطعات المتقدمة، مركز الكرة، ومركز الثقل" subtitle="تجميع ما تعلمناه: المستويات، الأنظمة الخطية، المسافات، والمتوسطات.">
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 12, marginBottom: 12 }}>
-        <div style={{ fontWeight: 800, fontSize: 13, color: '#0f172a', marginBottom: 6 }}>خريطة هذه المرحلة</div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8, fontSize: 11 }}>
-          <div style={{ background: '#eff6ff', border: '1px solid #bfdbfe', borderRadius: 10, padding: 8 }}><strong>تقاطع مستويين</strong><br />n₁×n₂ → u → نقطة → مستقيم</div>
-          <div style={{ background: '#fffbeb', border: '1px solid #fde68a', borderRadius: 10, padding: 8 }}><strong>مركز الكرة</strong><br />|MA|²=|MB|² → نظام خطي → M</div>
-          <div style={{ background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 10, padding: 8 }}><strong>مركز الثقل</strong><br />(A+B+C)/3 → متوسطات 2:1</div>
+    <LessonLayout title="مراجعة كبيرة — تجمع كل شيء" subtitle="هنا نربط الخيوط: كيف نجد خط تقاطع مستويين؟ كيف نجد مركز كرة تمر بأربع نقاط؟ وأين نقطة توازن المثلث؟ كلها تطبيقات لما تعلمته.">
+      <div style={{ background: 'linear-gradient(135deg,#f5f3ff,#fffbeb)', border: '1px solid #ddd6fe', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 12 }}>
+        <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 6 }}>🧩 ثلاث أفكار في مرحلة واحدة</div>
+        <div style={{ display: 'grid', gap: 8 }}>
+          <div>• <strong>خط التقاطع:</strong> اتجاهه عمودي على الناظمين معًا → <MathInline tex="u=n_1\times n_2" /></div>
+          <div>• <strong>مركز الكرة:</strong> النقطة التي تبعد نفس المسافة عن الجميع → نحولها لنظام خطي بسيط.</div>
+          <div>• <strong>مركز الثقل:</strong> متوسط الإحداثيات — نقطة التوازن الحقيقية.</div>
         </div>
       </div>
 

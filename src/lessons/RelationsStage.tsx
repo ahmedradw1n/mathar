@@ -4,7 +4,7 @@ import CoordinateSystem3D from '../three/CoordinateSystem3D'
 import LineRelation3D from '../three/LineRelation3D'
 import LinePlaneRelation3D from '../three/LinePlaneRelation3D'
 import PlaneRelation3D from '../three/PlaneRelation3D'
-import { LessonLayout, StepBlock, HintBox } from '../components/lessons/LessonLayout'
+import { LessonLayout, StepBlock, HintBox, HumanNote } from '../components/lessons/LessonLayout'
 import { MathBlock, MathInline } from '../components/math/MathBlock'
 import { classifyLineLineRelation, classifyLinePlaneRelation, classifyPlanePlaneRelation, arabicLineLine, arabicLinePlane, arabicPlanePlane } from '../math/relations'
 import { cross, dot } from '../math/vectors'
@@ -71,20 +71,20 @@ export default function RelationsStage() {
   }
 
   return (
-    <LessonLayout title="الوضع النسبي والتقاطعات" subtitle="متى يتوازى مستقيمان؟ متى يتخالفان؟ ومتى يقطع مستقيم مستوىً؟ وماذا عن مستويين؟">
-      <div style={{ background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 12, marginBottom: 12 }}>
-        <div style={{ fontWeight: 800, fontSize: 13, color: '#0f172a', marginBottom: 6 }}>خريطة المرحلة</div>
-        <div dir="ltr" style={{ fontFamily: 'monospace', fontSize: 11, background: '#f8fafc', borderRadius: 8, padding: 10, overflowX: 'auto' }}>
-          مستقيم (P,u) → توازي u∥v → نظام P+t·u=Q+s·v → تقاطع/تخالف<br />
-          مستقيم+مستوى → n·u (صفر؟) → تقاطع/موازاة/احتواء<br />
-          مستويان (n₁,n₂) → n₁×n₂ → مستقيم التقاطع
+    <LessonLayout title="كيف يلتقي المستقيمان والمستويان؟" subtitle="هل يمشيان معًا؟ هل يتقاطعان؟ هل يتخالفان كطريقين في جسور مختلفة؟ الفكرة كلها في 'هل اتجاههما متوازٍ؟' و 'هل يلتقيان فعلًا؟'">
+      <div style={{ background: 'linear-gradient(135deg,#f5f3ff,#eff6ff)', border: '1px solid #ddd6fe', borderRadius: 14, padding: '12px 14px', fontSize: 13.5, color: '#334155', lineHeight: 1.7, marginBottom: 12 }}>
+        <div style={{ fontWeight: 800, color: '#0f172a', marginBottom: 4 }}>🧩 الخلاصة قبل التفاصيل</div>
+        <div style={{ display: 'grid', gap: 6 }}>
+          <div>• مستقيمان: شوف <MathInline tex="u\times v" /> — صفر؟ متوازيان. لا؟ حلّ المعادلة <MathInline tex="P+t u = Q+s v" /> — لها حل؟ متقاطعان، وإلا متخالفان.</div>
+          <div>• مستقيم + مستوى: شوف <MathInline tex="n\cdot u" /> — صفر؟ موازٍ أو واقع. غير صفر؟ يقطع في نقطة واحدة.</div>
+          <div>• مستويان: شوف <MathInline tex="n_1\times n_2" /> — هو اتجاه خط التقاطع إن وجد.</div>
         </div>
-        <div style={{ fontSize: 11, color: '#64748b', marginTop: 6 }}>كل علاقة تُحسب بـ Math Core مع EPS، والواجهة تعرض العربية فقط.</div>
       </div>
 
       {/* مفهوم الوضع النسبي */}
-      <StepBlock num="1" title="مفهوم الوضع النسبي">
-        <p>ما العلاقة بين شكلين؟ هل يتوازيان؟ يتقاطعان؟ متطابقان؟ متخالفان؟ سنستخدم ما تعلمناه: الشعاع، التوازي (<MathInline tex="u\\times v=0" />)، التعامد (<MathInline tex="n\\cdot u=0" />).</p>
+      <StepBlock num="1" title="الفكرة العامة — مثل طرق السيارات">
+        <p>تخيل مستقيمان كطريقين: إما يسيران متوازيين كطريقين سريعين، أو يلتقيان في تقاطع، أو يكونان متطابقين (نفس الطريق)، أو متخالفين كجسر فوق طريق — لا يتوازيان ولا يلتقيان. هذا الأخير لا يحدث في الورقة، فقط في الفضاء.</p>
+        <HumanNote>كل الاختبارات تعتمد على ما تعلمته: <MathInline tex="u\times v=0" /> للتوازي، و <MathInline tex="n\cdot u=0" /> للتعامد.</HumanNote>
       </StepBlock>
 
       {/* Line-Line */}
